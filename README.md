@@ -1,2 +1,3 @@
-# SDVXScoreDetector
-SDVXScoreDetector / C# OpenCV &amp; OCR
+# 開発版
+開発中です。触らないほうがよろしいかと。  
+  
