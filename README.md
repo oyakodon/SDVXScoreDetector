@@ -1,3 +1,23 @@
-# ŠJ”­”Å
-ŠJ”­’†‚Å‚·BG‚ç‚È‚¢‚Ù‚¤‚ª‚æ‚ë‚µ‚¢‚©‚ÆB  
-  
+# SDVXScoreDetector
+
+SDVXã®ãƒ—ãƒ¬ãƒ¼ã‚·ã‚§ã‚¢ç”»åƒã‹ã‚‰ã‚¹ã‚³ã‚¢ç­‰ã®æƒ…å ±ã‚’æ¤œå‡ºã—ã¾ã™ã€‚
+
+## è¨€èªç­‰
+
+- C#
+- CoreTweet
+- Newtonsoft.Json
+- OpenCV
+- OpenCVSharp
+
+## ä½œã£ãŸäºº
+
+è¦ªå­ä¸¼
+
+- Twitter: [@alltekito](https://twitter.com/alltekito)
+- GitHub: [@oyakodon](https://github.com/oyakodon)
+- <https://oykdn.com>
+
+## ãƒ©ã‚¤ã‚»ãƒ³ã‚¹
+
+MIT License
