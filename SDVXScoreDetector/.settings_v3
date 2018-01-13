@@ -1,0 +1,15 @@
+{
+  "ScoreNum_Large": {
+    "X": 145,
+    "Y": 400,
+    "H": 36,
+    "W": 24
+  },
+  "ScoreNum_Small": {
+    "X": 266,
+    "Y": 405,
+    "H": 30,
+    "W": 20
+  },
+  "TemplatesPath": "./template/gw"
+}

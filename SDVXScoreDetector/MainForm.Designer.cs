@@ -48,7 +48,7 @@
             // labScore
             // 
             this.labScore.AutoSize = true;
-            this.labScore.Location = new System.Drawing.Point(274, 16);
+            this.labScore.Location = new System.Drawing.Point(274, 36);
             this.labScore.Name = "labScore";
             this.labScore.Size = new System.Drawing.Size(37, 12);
             this.labScore.TabIndex = 1;
@@ -58,7 +58,8 @@
             // 
             this.picBox_score.Location = new System.Drawing.Point(16, 16);
             this.picBox_score.Name = "picBox_score";
-            this.picBox_score.Size = new System.Drawing.Size(233, 78);
+            this.picBox_score.Size = new System.Drawing.Size(233, 353);
+            this.picBox_score.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBox_score.TabIndex = 2;
             this.picBox_score.TabStop = false;
             // 
@@ -77,7 +78,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(450, 107);
+            this.ClientSize = new System.Drawing.Size(462, 383);
             this.Controls.Add(this.btnTweet);
             this.Controls.Add(this.picBox_score);
             this.Controls.Add(this.labScore);

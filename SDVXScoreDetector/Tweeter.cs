@@ -9,26 +9,22 @@ namespace SDVXScoreDetector
     {
         public static string pinCode = null;
 
-        public static void TweetWithImg(string imgpath, string score)
+        public static void TweetWithImg(string imgpath, string content)
         {
+            if (string.IsNullOrEmpty(content) || !File.Exists(imgpath))
+            {
+                throw new ArgumentException("Content or image path is invalid");
+            }
+
             var result = MessageBox.Show("リザルト画像とスコアをツイートしますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
                 var t = Auth();
 
-                if (MainForm.DEBUG)
-                {
-                    MessageBox.Show("Twitter認証: OK\nAPI Remaining: " + t.Application.RateLimitStatus().RateLimit.Remaining, "DEBUG", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if (MessageBox.Show("ツイート送信？", "DEBUG", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                    {
-                        return;
-                    }
-                }
-
                 var media = t.Media.Upload(media: new FileInfo(imgpath));
                 var s = t.Statuses.Update(
-                    status: "スコア: " + score,
+                    status: content,
                     media_ids: new long[] { media.MediaId }
                 );
 

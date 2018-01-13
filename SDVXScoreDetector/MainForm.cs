@@ -6,66 +6,58 @@ namespace SDVXScoreDetector
 {
     public partial class MainForm : Form
     {
-        public static Bitmap scoreImg;
-        public const bool DEBUG = true;
-
-        private string score = "";
+        private int score = 0;
         private string imgpath = null;
 
         public MainForm()
         {
             InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
-            if (DEBUG)
-            {
-                btnTweet.Enabled = true;
-            }
         }
 
         private void btnDetect_Click(object sender, EventArgs e)
         {
             var ofd = new OpenFileDialog();
-            ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+            ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
-            if (DEBUG)
-            {
-                ofd.InitialDirectory = System.IO.Path.GetFullPath(@"..\..\assets\TestPattern");
-            }
+#if DEBUG
+            ofd.InitialDirectory = System.IO.Path.GetFullPath(@"..\..\assets\TestPattern");
+#endif
 
             ofd.Filter = "イメージファイル(*.jpg;*.png;*.bmp)|*.jpg;*.png;*.bmp|すべてのファイル(*.*)|*.*";
             ofd.Title = "プレーシェア画像を開く";
             ofd.RestoreDirectory = true;
 
-            //ダイアログを表示する
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    score = "[ " + Detecter.Detect(ofd.FileName) + " ]";
+                    picBox_score.Image = new Bitmap(ofd.FileName);
+
+                    score = Detecter.Detect(ofd.FileName, 4);
                     imgpath = ofd.FileName;
                     btnTweet.Enabled = true;
-                }
-                catch (Exception)
-                {
-                    score = "[ Errored! ]";
-                }
 
-                labScore.Text = "スコア：　" + score;
-                picBox_score.Image = scoreImg;
+                    labScore.Text = "スコア：　" + score;
+                }
+                catch (Exception ex)
+                {
+#if DEBUG
+                    MessageBox.Show("スコアを認識できませんでした。\n" + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#else
+                    MessageBox.Show("スコアを認識できませんでした。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
+
+                    labScore.Text = "スコア：　";
+                }
             }
 
         }
 
         private void btnTweet_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Tweeter.TweetWithImg(imgpath, score);
-            } catch (Exception ex)
-            {
-                MessageBox.Show("ツイート中にエラーが発生しました。\n\n------------------------------\n" + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-            }
+            // Tweeter.TweetWithImg(imgpath, score);
         }
     }
+
 }

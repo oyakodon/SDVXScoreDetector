@@ -1,0 +1,15 @@
+{
+  "ScoreNum_Large": {
+    "X": 154,
+    "Y": 367,
+    "H": 33,
+    "W": 27
+  },
+  "ScoreNum_Small": {
+    "X": 285,
+    "Y": 374,
+    "H": 24,
+    "W": 19
+  },
+  "TemplatesPath": "./template/hh"
+}
