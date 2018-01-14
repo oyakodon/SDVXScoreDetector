@@ -11,5 +11,28 @@
     "H": 24,
     "W": 19
   },
+  "GradeArea": {
+    "X": 231,
+    "Y": 132,
+    "H": 113,
+    "W": 165
+  },
+  "GaugeArea": {
+    "X": 352,
+    "Y": 199,
+    "H": 363,
+    "W": 47
+  },
+  "GradePlusArea": {
+    "X": 0,
+    "Y": 134,
+    "H": 31,
+    "W": 29
+  },
+  "GradePlusX": [
+    330,
+    338,
+    338
+  ],
   "TemplatesPath": "./template/hh"
 }

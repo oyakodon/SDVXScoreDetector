@@ -32,12 +32,13 @@
             this.labScore = new System.Windows.Forms.Label();
             this.picBox_score = new System.Windows.Forms.PictureBox();
             this.btnTweet = new System.Windows.Forms.Button();
+            this.labGrade = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBox_score)).BeginInit();
             this.SuspendLayout();
             // 
             // btnDetect
             // 
-            this.btnDetect.Location = new System.Drawing.Point(276, 71);
+            this.btnDetect.Location = new System.Drawing.Point(276, 105);
             this.btnDetect.Name = "btnDetect";
             this.btnDetect.Size = new System.Drawing.Size(75, 23);
             this.btnDetect.TabIndex = 0;
@@ -66,7 +67,7 @@
             // btnTweet
             // 
             this.btnTweet.Enabled = false;
-            this.btnTweet.Location = new System.Drawing.Point(363, 71);
+            this.btnTweet.Location = new System.Drawing.Point(363, 105);
             this.btnTweet.Name = "btnTweet";
             this.btnTweet.Size = new System.Drawing.Size(75, 23);
             this.btnTweet.TabIndex = 3;
@@ -74,11 +75,21 @@
             this.btnTweet.UseVisualStyleBackColor = true;
             this.btnTweet.Click += new System.EventHandler(this.btnTweet_Click);
             // 
+            // labGrade
+            // 
+            this.labGrade.AutoSize = true;
+            this.labGrade.Location = new System.Drawing.Point(274, 70);
+            this.labGrade.Name = "labGrade";
+            this.labGrade.Size = new System.Drawing.Size(48, 12);
+            this.labGrade.TabIndex = 4;
+            this.labGrade.Text = "グレード：";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(462, 383);
+            this.Controls.Add(this.labGrade);
             this.Controls.Add(this.btnTweet);
             this.Controls.Add(this.picBox_score);
             this.Controls.Add(this.labScore);
@@ -98,6 +109,7 @@
         private System.Windows.Forms.Label labScore;
         private System.Windows.Forms.PictureBox picBox_score;
         private System.Windows.Forms.Button btnTweet;
+        private System.Windows.Forms.Label labGrade;
     }
 }
 

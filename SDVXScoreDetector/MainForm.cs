@@ -6,7 +6,7 @@ namespace SDVXScoreDetector
 {
     public partial class MainForm : Form
     {
-        private int score = 0;
+        private DetectResult result = null;
         private string imgpath = null;
 
         public MainForm()
@@ -34,11 +34,12 @@ namespace SDVXScoreDetector
                 {
                     picBox_score.Image = new Bitmap(ofd.FileName);
 
-                    score = Detecter.Detect(ofd.FileName, 4);
+                    result = Detecter.Detect(ofd.FileName, 4);
                     imgpath = ofd.FileName;
                     btnTweet.Enabled = true;
 
-                    labScore.Text = "スコア：　" + score;
+                    labScore.Text = "スコア：　" + result.Score;
+                    labGrade.Text = "グレード：　" + result.Grade.ToStringFromGrade();
                 }
                 catch (Exception ex)
                 {
