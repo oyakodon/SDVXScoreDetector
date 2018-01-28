@@ -36,9 +36,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CoreTweet, Version=0.8.1.394, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\CoreTweet.0.8.1.394\lib\net45\CoreTweet.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1-beta3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -80,12 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Detecter.cs" />
-    <Compile Include="GetPin.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GetPin.Designer.cs">
-      <DependentUpon>GetPin.cs</DependentUpon>
-    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,10 +85,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tweeter.cs" />
-    <EmbeddedResource Include="GetPin.resx">
-      <DependentUpon>GetPin.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -111,10 +98,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include=".settings_v3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include=".settings_v4">
+    <None Include="settings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="app.config" />
@@ -128,39 +112,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="assets\TestPattern\ChTKGdWUYAE3Cjp.jpg" />
-    <Content Include="assets\TestPattern\CiP9gH1UkAQ6LNL.jpg" />
-    <Content Include="assets\TestPattern\CivkbgQUkAAyO7n.jpg" />
-    <Content Include="assets\TestPattern\CiZJlIZVAAAd2TQ.jpg" />
-    <Content Include="assets\TestPattern\Cj8bOU9UkAAsf8h.jpg" />
-    <Content Include="assets\TestPattern\Cj8bOVMVEAAIrp-.jpg" />
-    <Content Include="assets\TestPattern\CjBQs-BUYAAxUhW.jpg" />
-    <Content Include="assets\TestPattern\Cjc8Fl9UYAAeL4z.jpg" />
-    <Content Include="assets\TestPattern\Cjc8KnNUgAAMnAh.jpg" />
-    <Content Include="assets\TestPattern\Cjc8MJWUkAErIRZ.jpg" />
-    <Content Include="assets\TestPattern\CjCzWF8UgAA76QT.jpg" />
-    <Content Include="assets\TestPattern\Cjl-nlxUYAAdfHA.jpg" />
-    <Content Include="assets\TestPattern\CjnYW_NUoAIduDx.jpg" />
-    <Content Include="assets\TestPattern\Cjr9iPrUUAErjOc.jpg" />
-    <Content Include="assets\TestPattern\CjRyJ_eWEAA4xpY.jpg" />
-    <Content Include="assets\TestPattern\CjScAiUWYAAoOkr.jpg" />
-    <Content Include="assets\TestPattern\CjTdoF0VEAAtOc4.jpg" />
-    <Content Include="assets\TestPattern\CjyAbRoUoAAImim.jpg" />
-    <Content Include="assets\TestPattern\CjyAle4UoAEMUim.jpg" />
-    <Content Include="assets\TestPattern\CjyAmFiVAAIn1Cp.jpg" />
-    <Content Include="assets\TestPattern\CjyAX7rUoAAccPR.jpg" />
-    <Content Include="assets\TestPattern\Cj_7NzyVAAI7kzR.jpg" />
-    <Content Include="assets\TestPattern\Cj_80fVUUAUEbIp.jpg" />
-    <Content Include="assets\TestPattern\Cj_9AFXUoAAMYLr.jpg" />
-    <Content Include="assets\TestPattern\Cj_9ce0UYAEnaTS.jpg" />
-    <Content Include="assets\TestPattern\Cj_9dDuVAAAX6qs.jpg" />
-    <Content Include="assets\TestPattern\Cj_9PRyUoAAbFM7.jpg" />
-    <Content Include="assets\TestPattern\CRVDrqrUYAENb1h.jpg" />
-    <Content Include="assets\TestPattern\CZt6F9XWkAAJwNl.jpg" />
-    <Content Include="assets\TestPattern\grv.jpg" />
-    <Content Include="assets\TestPattern\sdvx_playShare.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

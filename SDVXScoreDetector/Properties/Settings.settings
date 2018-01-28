@@ -1,18 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SDVXScoreDetector.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
   <Profiles />
-  <Settings>
-    <Setting Name="CK" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">tSFKXw2vxakSUx0AXrX7aFeiw</Value>
-    </Setting>
-    <Setting Name="AK" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="CS" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">c9tSEY81ITrqB5fVAECUi7q0FatiVmm6VJcz8KfwSBoKbAehtP</Value>
-    </Setting>
-    <Setting Name="AS" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-  </Settings>
+  <Settings />
 </SettingsFile>

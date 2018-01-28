@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
@@ -9,20 +10,18 @@ namespace SDVXScoreDetector
 {
     public class Detecter
     {
+        /// <summary>
+        /// 設定ファイルのパス
+        /// </summary>
+        private const string JSONPATH = "./settings.json";
 
         /// <summary>
         /// プレーシェア画像から各種情報を検出して返します。
         /// </summary>
         /// <param name="filename">ファイル名</param>
-        /// <param name="version">SDVXのバージョン(3: III GW, 4: IV HH)</param>
         /// <returns>スコア</returns>
-        public static DetectResult Detect(string filename, int version)
+        public static DetectResult Detect(string filename)
         {
-            if (version != 3 && version != 4)
-            {
-                throw new System.ArgumentException("version is not valid.");
-            }
-
             IplImage playShare = null;
             DetectProperty prop = null;
 
@@ -39,9 +38,8 @@ namespace SDVXScoreDetector
             try
             {
                 string json = "";
-                string jsonfile = "./.settings_v" + version;
 
-                using (var sr = new StreamReader(jsonfile, System.Text.Encoding.UTF8))
+                using (var sr = new StreamReader(JSONPATH, System.Text.Encoding.UTF8))
                 {
                     json = sr.ReadToEnd();
                 }
@@ -53,6 +51,11 @@ namespace SDVXScoreDetector
             {
                 MessageBox.Show("設定の読込中にエラーが発生しました。\n\n------------------------------\n" + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 throw ex;
+            }
+
+            if (prop == null)
+            {
+                throw new NullReferenceException();
             }
 
             var score = MatchScoreTemplate(playShare, prop);

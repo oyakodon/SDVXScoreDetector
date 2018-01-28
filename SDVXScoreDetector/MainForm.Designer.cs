@@ -28,23 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnDetect = new System.Windows.Forms.Button();
+            this.btnOpen = new System.Windows.Forms.Button();
             this.labScore = new System.Windows.Forms.Label();
             this.picBox_score = new System.Windows.Forms.PictureBox();
-            this.btnTweet = new System.Windows.Forms.Button();
             this.labGrade = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picBox_score)).BeginInit();
             this.SuspendLayout();
             // 
-            // btnDetect
+            // btnOpen
             // 
-            this.btnDetect.Location = new System.Drawing.Point(276, 105);
-            this.btnDetect.Name = "btnDetect";
-            this.btnDetect.Size = new System.Drawing.Size(75, 23);
-            this.btnDetect.TabIndex = 0;
-            this.btnDetect.Text = "検出";
-            this.btnDetect.UseVisualStyleBackColor = true;
-            this.btnDetect.Click += new System.EventHandler(this.btnDetect_Click);
+            this.btnOpen.Location = new System.Drawing.Point(375, 111);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(75, 23);
+            this.btnOpen.TabIndex = 0;
+            this.btnOpen.Text = "参照";
+            this.btnOpen.UseVisualStyleBackColor = true;
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
             // 
             // labScore
             // 
@@ -57,23 +56,13 @@
             // 
             // picBox_score
             // 
+            this.picBox_score.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.picBox_score.Location = new System.Drawing.Point(16, 16);
             this.picBox_score.Name = "picBox_score";
             this.picBox_score.Size = new System.Drawing.Size(233, 353);
             this.picBox_score.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBox_score.TabIndex = 2;
             this.picBox_score.TabStop = false;
-            // 
-            // btnTweet
-            // 
-            this.btnTweet.Enabled = false;
-            this.btnTweet.Location = new System.Drawing.Point(363, 105);
-            this.btnTweet.Name = "btnTweet";
-            this.btnTweet.Size = new System.Drawing.Size(75, 23);
-            this.btnTweet.TabIndex = 3;
-            this.btnTweet.Text = "ツイートする";
-            this.btnTweet.UseVisualStyleBackColor = true;
-            this.btnTweet.Click += new System.EventHandler(this.btnTweet_Click);
             // 
             // labGrade
             // 
@@ -90,10 +79,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(462, 383);
             this.Controls.Add(this.labGrade);
-            this.Controls.Add(this.btnTweet);
             this.Controls.Add(this.picBox_score);
             this.Controls.Add(this.labScore);
-            this.Controls.Add(this.btnDetect);
+            this.Controls.Add(this.btnOpen);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "SDVX Score Detector";
@@ -105,10 +94,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btnDetect;
+        private System.Windows.Forms.Button btnOpen;
         private System.Windows.Forms.Label labScore;
         private System.Windows.Forms.PictureBox picBox_score;
-        private System.Windows.Forms.Button btnTweet;
         private System.Windows.Forms.Label labGrade;
     }
 }

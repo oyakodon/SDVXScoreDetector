@@ -12,10 +12,9 @@ namespace SDVXScoreDetector
         public MainForm()
         {
             InitializeComponent();
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
         }
 
-        private void btnDetect_Click(object sender, EventArgs e)
+        private void btnOpen_Click(object sender, EventArgs e)
         {
             var ofd = new OpenFileDialog();
             ofd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
@@ -34,9 +33,8 @@ namespace SDVXScoreDetector
                 {
                     picBox_score.Image = new Bitmap(ofd.FileName);
 
-                    result = Detecter.Detect(ofd.FileName, 4);
+                    result = Detecter.Detect(ofd.FileName);
                     imgpath = ofd.FileName;
-                    btnTweet.Enabled = true;
 
                     labScore.Text = "スコア：　" + result.Score;
                     labGrade.Text = "グレード：　" + result.Grade.ToStringFromGrade();
@@ -53,11 +51,6 @@ namespace SDVXScoreDetector
                 }
             }
 
-        }
-
-        private void btnTweet_Click(object sender, EventArgs e)
-        {
-            // Tweeter.TweetWithImg(imgpath, score);
         }
     }
 
