@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace SDVXScoreDetector
 {
-    public class Detecter
+    public class Detector
     {
         /// <summary>
         /// 設定ファイルのパス
@@ -22,12 +22,12 @@ namespace SDVXScoreDetector
         /// <returns>スコア</returns>
         public static DetectResult Detect(string filename)
         {
-            IplImage playShare = null;
+            Mat playShare = null;
             DetectProperty prop = null;
 
             try
             {
-                playShare = new IplImage(filename, LoadMode.Color);
+                playShare = new Mat(filename, ImreadModes.Color);
             }
             catch (FileNotFoundException ex)
             {
@@ -70,7 +70,7 @@ namespace SDVXScoreDetector
         /// <param name="playShare">元画像(プレーシェア画像)</param>
         /// <param name="prop">設定情報</param>
         /// <returns>スコア</returns>
-        private static int MatchScoreTemplate(IplImage playShare, DetectProperty prop)
+        private static int MatchScoreTemplate(Mat playShare, DetectProperty prop)
         {
             string _score = "";
 
@@ -82,11 +82,11 @@ namespace SDVXScoreDetector
                 for (var t = 0; t < 10; t++)
                 {
                     var file = prop.TemplatesPath + "/" + t + ".jpg";
-                    IplImage template = null;
+                    Mat template = null;
 
                     try
                     {
-                        template = new IplImage(file, LoadMode.Color);
+                        template = new Mat(file, ImreadModes.Color);
                     }
                     catch (FileNotFoundException ex)
                     {
@@ -113,12 +113,12 @@ namespace SDVXScoreDetector
                         part.Y = prop.ScoreNum_Small.Y;
 
                         // テンプレート画像の縮小
-                        var resized_img = new IplImage(
-                            new CvSize((int)(template.Width * ((double)prop.ScoreNum_Small.W / prop.ScoreNum_Large.W)),
+                        var resized_img = new Mat(
+                            new Size((int)(template.Width * ((double)prop.ScoreNum_Small.W / prop.ScoreNum_Large.W)),
                             (int)(template.Height * ((double)prop.ScoreNum_Small.W / prop.ScoreNum_Large.W))),
-                            template.Depth, template.NChannels
+                            template.Type()
                         );
-                        Cv.Resize(template, resized_img, Interpolation.Linear);
+                        Cv2.Resize(template, resized_img, resized_img.Size());
                         template = resized_img;
                     }
 
@@ -143,7 +143,7 @@ namespace SDVXScoreDetector
         /// <param name="playShare">元画像(プレーシェア画像)</param>
         /// <param name="prop">設定情報</param>
         /// <returns>グレード</returns>
-        private static Grade MatchGradeTemplate(IplImage playShare, DetectProperty prop)
+        private static Grade MatchGradeTemplate(Mat playShare, DetectProperty prop)
         {
             Grade _grade = Grade.D;
             var max = 0.0;
@@ -151,11 +151,11 @@ namespace SDVXScoreDetector
             for (var t = 0; t < 10; t++)
             {
                 var file = prop.TemplatesPath + "/" + ((Grade)t).ToStringFromGrade() + ".jpg";
-                IplImage template = null;
+                Mat template = null;
 
                 try
                 {
-                    template = new IplImage(file, LoadMode.Color);
+                    template = new Mat(file, ImreadModes.Color);
                 }
                 catch (FileNotFoundException ex)
                 {
@@ -164,13 +164,9 @@ namespace SDVXScoreDetector
                 }
 
                 // ゲージ部分を黒で塗りつぶす(誤認識防止)
-                var dst = playShare.Clone();
+                Cv2.Rectangle(playShare, prop.GaugeArea.ToCvRect(), Scalar.Black);
 
-                dst.SetROI(prop.GaugeArea.ToCvRect());
-                dst.Set(new CvScalar(0, 0, 0));
-                dst.ResetROI();
-
-                var val = MatchTemplate(dst, template, prop.GradeArea);
+                var val = MatchTemplate(playShare, template, prop.GradeArea);
 
                 if (val > max)
                 {
@@ -183,11 +179,11 @@ namespace SDVXScoreDetector
             if (_grade == Grade.A || _grade == Grade.AA || _grade == Grade.AAA)
             {
                 var file = prop.TemplatesPath + "/Plus.jpg";
-                IplImage template = null;
+                Mat template = null;
 
                 try
                 {
-                    template = new IplImage(file, LoadMode.Color);
+                    template = new Mat(file, ImreadModes.Color);
                 }
                 catch (FileNotFoundException ex)
                 {
@@ -232,32 +228,19 @@ namespace SDVXScoreDetector
         /// <param name="template">テンプレート画像</param>
         /// <param name="partialArea">テンプレートマッチングしたい範囲</param>
         /// <returns>類似度</returns>
-        private static double MatchTemplate(IplImage src, IplImage template, Rect partialArea)
+        private static double MatchTemplate(Mat src, Mat template, Rect partialArea)
         {
-            CvRect roi = new CvRect(partialArea.X - 5, partialArea.Y - 5, partialArea.W + 5, partialArea.H + 5);
-            using (IplImage part = GetPartialImage(src, roi))
+            using (var part = src.Clone( new OpenCvSharp.Rect(partialArea.X - 5, partialArea.Y - 5, partialArea.W + 5, partialArea.H + 5) ))
             {
-                CvSize dstSize = new CvSize(part.Width - template.Width + 1, part.Height - template.Height + 1);
-                using (IplImage dst = new IplImage(dstSize, BitDepth.F32, 1))
+                var dstSize = new Size(part.Width - template.Width + 1, part.Height - template.Height + 1);
+                using (var dst = new Mat(dstSize, MatType.CV_32FC(1)))
                 {
-                    Cv.MatchTemplate(part, template, dst, MatchTemplateMethod.CCoeffNormed);
+                    Cv2.MatchTemplate(part, template, dst, TemplateMatchModes.CCoeffNormed);
                     double minVal, maxVal;
-                    Cv.MinMaxLoc(dst, out minVal, out maxVal);
+                    Cv2.MinMaxLoc(dst, out minVal, out maxVal);
                     return maxVal;
                 }
             }
-        }
-
-        /// <summary>
-        /// 部分画像を取得します。
-        /// </summary>
-        private static IplImage GetPartialImage(IplImage src, CvRect roi)
-        {
-            src.SetROI(roi);
-            IplImage part = new IplImage(roi.Size, src.Depth, src.NChannels);
-            Cv.Copy(src, part);
-            src.ResetROI();
-            return part;
         }
     }
 
@@ -333,9 +316,9 @@ namespace SDVXScoreDetector
             H = 0;
         }
 
-        public CvRect ToCvRect()
+        public OpenCvSharp.Rect ToCvRect()
         {
-            return new CvRect(X, Y, W, H);
+            return new OpenCvSharp.Rect(X, Y, W, H);
         }
     }
 

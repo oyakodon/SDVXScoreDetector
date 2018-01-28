@@ -33,7 +33,7 @@ namespace SDVXScoreDetector
                 {
                     picBox_score.Image = new Bitmap(ofd.FileName);
 
-                    result = Detecter.Detect(ofd.FileName);
+                    result = Detector.Detect(ofd.FileName);
                     imgpath = ofd.FileName;
 
                     labScore.Text = "スコア：　" + result.Score;
