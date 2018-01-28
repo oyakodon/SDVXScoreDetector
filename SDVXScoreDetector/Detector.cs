@@ -59,7 +59,7 @@ namespace SDVXScoreDetector
             }
 
             var score = MatchScoreTemplate(playShare, prop);
-            var grade = MatchGradeTemplate(playShare, prop);
+            var grade = CalcurateGrade(score);
 
             return new DetectResult(score, grade);
         }
@@ -81,7 +81,7 @@ namespace SDVXScoreDetector
 
                 for (var t = 0; t < 10; t++)
                 {
-                    var file = prop.TemplatesPath + "/" + t + ".jpg";
+                    var file = "./template/" + t + ".jpg";
                     Mat template = null;
 
                     try
@@ -138,87 +138,48 @@ namespace SDVXScoreDetector
         }
 
         /// <summary>
-        /// 画像からグレードを検出します。
+        /// スコアからグレードを計算します。
         /// </summary>
-        /// <param name="playShare">元画像(プレーシェア画像)</param>
-        /// <param name="prop">設定情報</param>
+        /// <param name="score">スコア</param>
         /// <returns>グレード</returns>
-        private static Grade MatchGradeTemplate(Mat playShare, DetectProperty prop)
+        private static Grade CalcurateGrade(int score)
         {
-            Grade _grade = Grade.D;
-            var max = 0.0;
+            var grade = Grade.D;
 
-            for (var t = 0; t < 10; t++)
+            switch (score)
             {
-                var file = prop.TemplatesPath + "/" + ((Grade)t).ToStringFromGrade() + ".jpg";
-                Mat template = null;
-
-                try
-                {
-                    template = new Mat(file, ImreadModes.Color);
-                }
-                catch (FileNotFoundException ex)
-                {
-                    MessageBox.Show("テンプレート画像の読込中にエラーが発生しました。\nテンプレートフォルダの存在を確認してください。\n\n------------------------------\n" + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    throw ex;
-                }
-
-                // ゲージ部分を黒で塗りつぶす(誤認識防止)
-                Cv2.Rectangle(playShare, prop.GaugeArea.ToCvRect(), Scalar.Black);
-
-                var val = MatchTemplate(playShare, template, prop.GradeArea);
-
-                if (val > max)
-                {
-                    max = val;
-                    _grade = (Grade)t;
-                }
+                case int n when n >= 9_900_000:
+                    grade = Grade.S;
+                    break;
+                case int n when n >= 9_800_000:
+                    grade = Grade.AAA_Plus;
+                    break;
+                case int n when n >= 9_700_000:
+                    grade = Grade.AAA;
+                    break;
+                case int n when n >= 9_500_000:
+                    grade = Grade.AA_Plus;
+                    break;
+                case int n when n >= 9_300_000:
+                    grade = Grade.AA;
+                    break;
+                case int n when n >= 9_000_000:
+                    grade = Grade.A_Plus;
+                    break;
+                case int n when n >= 8_700_000:
+                    grade = Grade.A;
+                    break;
+                case int n when n >= 7_500_000:
+                    grade = Grade.B;
+                    break;
+                case int n when n >= 6_500_000:
+                    grade = Grade.C;
+                    break;
+                default:
+                    break;
             }
 
-            // A, AA, AAAの場合 +の有り無しを判定
-            if (_grade == Grade.A || _grade == Grade.AA || _grade == Grade.AAA)
-            {
-                var file = prop.TemplatesPath + "/Plus.jpg";
-                Mat template = null;
-
-                try
-                {
-                    template = new Mat(file, ImreadModes.Color);
-                }
-                catch (FileNotFoundException ex)
-                {
-                    MessageBox.Show("テンプレート画像の読込中にエラーが発生しました。\nテンプレートフォルダの存在を確認してください。\n\n------------------------------\n" + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    throw ex;
-                }
-
-                int idx = 0;
-                switch (_grade)
-                {
-                    case Grade.A: idx = 0; break;
-                    case Grade.AA: idx = 1; break;
-                    case Grade.AAA: idx = 2; break;
-                    default: break;
-                }
-
-                var area = prop.GradePlusArea;
-                area.X = prop.GradePlusX[idx];
-                var val = MatchTemplate(playShare, template, area);
-
-                // 類似度が0.5以上の時、+を付ける
-                if (val > 0.5)
-                {
-                    switch(_grade)
-                    {
-                        case Grade.A: _grade = Grade.A_Plus; break;
-                        case Grade.AA: _grade = Grade.AA_Plus; break;
-                        case Grade.AAA: _grade = Grade.AAA_Plus; break;
-                        default: break;
-                    }
-                }
-
-            }
-
-            return _grade;
+            return grade;
         }
 
         /// <summary>
@@ -252,8 +213,6 @@ namespace SDVXScoreDetector
         public Rect GaugeArea;
         public Rect GradePlusArea;
         public List<int> GradePlusX;
-
-        public string TemplatesPath;
     }
 
     public class DetectResult
